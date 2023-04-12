@@ -51,16 +51,16 @@ export class LocalStorageProxy<T> {
 
 export default class ElectionList {
     private readonly localStorageProxy: LocalStorageProxy<Party>;
-    private editedParty: Party | null;
-    private editedPartyIndex: number | null;
+    private editingParty: Party | null;
+    private editingPartyIndex: number | null;
     private beforeEditNameCache: string;
     private beforeEditVoteCache: number;
 
 
     constructor(localStorageProxy: LocalStorageProxy<Party>) {
         this.localStorageProxy = localStorageProxy;
-        this.editedParty = null
-        this.editedPartyIndex = null
+        this.editingParty = null
+        this.editingPartyIndex = null
         this.beforeEditNameCache = ''
         this.beforeEditVoteCache = 0
     }
@@ -92,31 +92,32 @@ export default class ElectionList {
         this.localStorageProxy.set(partiesWithoutDeleted);
     }
 
-    public editParty(editingState: Editing, party: Party, partyChanges: Omit<Party, "id">) {
+    public editParty(editingState: Editing, party: Party, partyChanges?: Omit<Party, "id">) {
         const parties = this.localStorageProxy.get();
-        const editedParty = this.editedParty;
+        const editingParty = this.editingParty;
 
         switch (editingState) {
             case Editing.Start:
                 this.beforeEditNameCache = party.name
                 this.beforeEditVoteCache = party.votes
-                this.editedPartyIndex = parties.indexOf(party)
-                this.editedParty = {id: party.id, name: partyChanges.name, votes: partyChanges.votes};
+                this.editingPartyIndex = parties.indexOf(party)
+                this.editingParty = party;
                 break;
             case Editing.Done:
-                if (!editedParty) return;
+                if (!editingParty) throw new Error("No party is being edited");
+                if (!partyChanges) throw new Error("No party changes provided");
                 const currentParties = this.localStorageProxy.get();
                 const editedParties = currentParties.map(party => {
-                    if (party.id === editedParty.id) return editedParty;
+                    if (party.id === editingParty.id) return {id: editingParty.id, name: partyChanges.name, votes: partyChanges.votes};
                     return party;
                 });
                 this.localStorageProxy.set(editedParties);
                 this.resetEditedParty();
                 break;
             case Editing.Cancel:
-                if (!editedParty) return;
+                if (!editingParty) throw new Error("No party is being edited");
                 const cancelEditParties = parties.map(party => {
-                    if (party.id === editedParty.id) return {id: party.id, name: this.beforeEditNameCache, votes: this.beforeEditVoteCache};
+                    if (party.id === editingParty.id) return {id: party.id, name: this.beforeEditNameCache, votes: this.beforeEditVoteCache};
                     return party;
                 });
                 this.localStorageProxy.set(cancelEditParties);
@@ -175,9 +176,13 @@ export default class ElectionList {
         return this.localStorageProxy.get();
     }
 
+    public getEditedParty() {
+        return this.editingParty;
+    }
+
     private resetEditedParty() {
-        this.editedParty = null;
-        this.editedPartyIndex = null;
+        this.editingParty = null;
+        this.editingPartyIndex = null;
         this.beforeEditNameCache = "";
         this.beforeEditVoteCache = 0;
     }

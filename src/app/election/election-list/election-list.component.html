@@ -7,15 +7,22 @@
                 <th scope="col">Action</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="getParties().length > 0; else elseBlock">
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" *ngFor="let party of getParties()">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ party.name }}</th>
                 <td class="px-6 py-4">{{ party.votes }}</td>
                 <td class="flex flex-row py-4 gap-4">
-                    <button class="" (click)="editParty(party.id)">Edit</button>
+                    <button class="" (click)="startEditingParty(party.id)">Edit</button>
                     <button class="" (click)="deleteParty(party.id)">Delete</button>
                 </td>
             </tr>
         </tbody>
+        <ng-template #elseBlock>
+            <tbody>
+                <tr class="w-full bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <th colspan="3" scope="row" class="w-full self-center text-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-zinc-500">No party entries...</th>
+                </tr>
+            </tbody>
+        </ng-template>
     </table>
 </div>

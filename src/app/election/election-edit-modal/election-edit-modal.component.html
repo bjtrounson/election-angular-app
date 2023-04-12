@@ -1,0 +1,46 @@
+<div class="z-10 inset-0 overflow-y-auto fixed" [hidden]="!getModalOpen()">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <div
+            class="inline-block align-bottom bg-gray-50 dark:bg-gray-700 dark:text-gray-400 rounded-lg px-4 py-3 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="flex flex-row">
+                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Edit Party Modal</h3>
+            </div>
+            <div>
+                <div class="mt-2">
+                    <label for="partyName" class="text-sm font-medium text-gray-100">Party Name</label>
+                    <div class="mt-1">
+                        <input
+                            placeholder="Party Name E.g. National"
+                            type="text"
+                            name="partyName"
+                            id="partyName"
+                            autocomplete="partyName"
+                            class="bg-gray-200 text-gray-700 border border-gray-300 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            [(ngModel)]="partyName"
+                        />
+                    </div>
+                    <label for="partyVotes" class="text-sm font-medium text-gray-100">Party Votes</label>
+                    <div class="mt-1">
+                        <input
+                            type="text"
+                            name="partyVotes"
+                            id="partyVotes"
+                            autocomplete="partyVotes"
+                            class="bg-gray-200 text-gray-700 border border-gray-300 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            [(ngModel)]="partyVotes"
+                        />
+                    </div>
+                    <div class="flex flex-col md:flex-row gap-2">
+                        <button class="mt-2 py-2 px-4 bg-red-400 shadow-md text-red-700 rounded-lg" (click)="(closeModal())">Cancel</button>
+                        <button class="mt-2 ml-auto  py-2 px-4 bg-green-400 text-green-700 shadow-md rounded-lg" (click)="(confirmEdit())">Confirm</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

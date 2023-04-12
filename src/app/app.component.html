@@ -1,8 +1,14 @@
-<div class="flex justify-center pt-8 bg-white dark:bg-gray-500 h-screen w-screen" role="main">
-    <div class="bg-gray-0 dark:bg-gray-600 w-full md:max-w-screen-md h-fit py-4 rounded-md shadow p-4">
-        <h3 class="text-gray-300 font-bold text-2xl">Parties</h3>
-        <app-election-form></app-election-form>
-        <app-election-list></app-election-list>
+<main class="flex flex-col bg-white dark:bg-gray-500 h-screen w-screen">
+    <div class="flex flex-col items-center pt-8 ">
+        <div class="bg-gray-0 dark:bg-gray-600 w-full md:max-w-screen-md h-fit py-4 rounded-md shadow-lg p-4">
+            <h3 class="text-gray-300 font-bold text-2xl">Parties</h3>
+            <app-election-form></app-election-form>
+            <app-election-list></app-election-list>
+        </div>
     </div>
-</div>
+    <div class="mt-auto">
+        <app-footer></app-footer>
+    </div>
+</main>
+<app-election-edit-modal></app-election-edit-modal>
 <router-outlet></router-outlet>
