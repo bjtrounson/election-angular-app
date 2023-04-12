@@ -19,8 +19,12 @@ export class LocalStorageProxy<T> {
 
     public constructor(key: string, initialValue: Array<T> = []) {
         this.storageKey = key;
-        this.storage = initialValue;
-        this.set(initialValue);
+        const currentStorage = this.get();
+        if (currentStorage.length > 0) this.storage = currentStorage;
+        else {
+            this.storage = initialValue;
+            this.set(initialValue);
+        }
     }
 
     public set(value: Array<T>): void {
@@ -79,11 +83,13 @@ export default class ElectionList {
         const id = parties.length + 1
         const party: Party = {id, name, votes};
         parties.push(party)
+        this.localStorageProxy.set(parties);
     }
 
-    public removeParty(partyIndex: number) {
+    public removeParty(partyId: number) {
         const parties = this.localStorageProxy.get();
-        this.localStorageProxy.set(parties.splice(partyIndex, 1));
+        const partiesWithoutDeleted = parties.filter((party) => party.id !== partyId);
+        this.localStorageProxy.set(partiesWithoutDeleted);
     }
 
     public editParty(editingState: Editing, party: Party, partyChanges: Omit<Party, "id">) {

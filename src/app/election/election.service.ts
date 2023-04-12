@@ -17,7 +17,15 @@ export class ElectionService {
         this.electionModel = new ElectionModel(this.localStorageProxy);
     }
 
+    deleteParty(id: number) {
+        this.electionModel.removeParty(id);
+    }
+
     parties() {
         return this.electionModel.getAllParties();
+    }
+
+    addParty(name: string, votes: number) {
+        this.electionModel.addParty(name, votes);
     }
 }

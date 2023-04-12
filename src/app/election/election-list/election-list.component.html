@@ -4,12 +4,17 @@
             <tr>
                 <th scope="col" class="px-6 py-3">Party</th>
                 <th scope="col" class="px-6 py-3">Votes</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" *ngFor="let party of parties">
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" *ngFor="let party of getParties()">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ party.name }}</th>
                 <td class="px-6 py-4">{{ party.votes }}</td>
+                <td class="flex flex-row py-4 gap-4">
+                    <button class="" (click)="editParty(party.id)">Edit</button>
+                    <button class="" (click)="deleteParty(party.id)">Delete</button>
+                </td>
             </tr>
         </tbody>
     </table>
