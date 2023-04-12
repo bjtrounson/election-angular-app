@@ -3,7 +3,7 @@ Recreation of a previous React project I created for a course in my bachelors wi
 
 The app is hosted on railway.app and can be found [here](https://election-app.bitcastle.dev/).
 
-If you want to run the app locally, you can do so by cloning the repo and running `npm install` and then `npm start` to start the app.
+If you want to run the app locally, you can do so by cloning the repo and running `npm install` and then `npm dev` to start the app.
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
